@@ -1,0 +1,47 @@
+{
+  "name": "telegram-bot-yuko",
+  "version": "0.0.0",
+  "description": "Preco's personal telegram bot",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "preinstall": "npm install -g pm2",
+    "prebuild": "npm run clean",
+    "start": "node .",
+    "test": "npm run lint",
+    "lint": "eslint .",
+    "build": "babel --out-dir lib src",
+    "dev": "nodemon --exec node --require babel-register -- src/index.js",
+    "clean": "rimraf lib"
+  },
+  "engines": {
+    "node": ">= 7",
+    "npm": ">= 3"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.20.0",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^16.0.0",
+    "mem": "^1.1.0",
+    "nedb": "^1.8.0",
+    "node-telegram-bot-api": "^0.25.0",
+    "pify": "^2.3.0",
+    "pify-proto": "^0.1.1",
+    "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-env": "^1.1.4",
+    "babel-preset-stage-1": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "eslint": "^3.12.2",
+    "eslint-config-prev": "^3.3.0",
+    "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "nodemon": "^1.11.0",
+    "rimraf": "^2.5.4"
+  }
+}
