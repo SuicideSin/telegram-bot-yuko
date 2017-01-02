@@ -6,6 +6,9 @@ export Logout from './auth/Logout';
 export Welcome from './system/Welcome';
 export Goodbye from './system/Goodbye';
 
+// Joy를 표하십시오
+export Dice from './joy/Dice';
+
 // # export Auth from './Auth';
 // # export Blackjack from './Blackjack';
 // # export Cancel from './Cancel';

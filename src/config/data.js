@@ -1,5 +1,5 @@
 const data = {
-  dice: [
+  dices: [
     'BQADBAADcAADhdpJAAFu_XId7Vrz5gI', // 1
     'BQADBAADdAADhdpJAAEPQEZjDcU1gwI', // 2
     'BQADBAADdgADhdpJAAGh7vdjt98DiwI', // 3
