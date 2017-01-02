@@ -1,11 +1,10 @@
 import {readFile} from 'fs';
 import pify from 'pify';
-import mem from 'mem';
 import GoogleAuth from 'google-auth-library';
 
 const readFileP = pify(readFile);
 
-async function getAuthInner(clientSecretPath, oauthSecretPath) {
+async function getAuth(clientSecretPath, oauthSecretPath) {
   const {
     installed: {
       client_secret: clientSecret,
@@ -21,8 +20,6 @@ async function getAuthInner(clientSecretPath, oauthSecretPath) {
 
   return oauth2Client;
 }
-
-const getAuth = mem(getAuthInner);
 
 export {
   getAuth as default,

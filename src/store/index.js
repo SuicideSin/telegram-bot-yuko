@@ -1,25 +1,5 @@
-import storeConfig from '../config/store';
-import StoreBase from './StoreBase';
+// 쿼리 랩퍼 내보내기
+export * as storeQuery from './storeQuery';
 
-const store = new StoreBase();
-
-function getStore(name) {
-  return store.get(name);
-}
-
-function createStore(name) {
-  return store.create(name);
-}
-
-function registerStore() {
-  const storePromises = storeConfig.stores
-    .map((elem) => createStore(elem));
-
-  return Promise.all(storePromises);
-}
-
-export {
-  getStore,
-  createStore,
-  registerStore,
-};
+// 기본 스토어 내보내기
+export * from './defaultStore';

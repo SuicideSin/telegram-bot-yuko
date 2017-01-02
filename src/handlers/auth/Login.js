@@ -1,9 +1,10 @@
 import Handler from '../../core/Handler';
-import {setUser} from '../../store/query';
+import HandlerError from '../../core/HandlerError';
+import series from '../../core/decorators/series';
 import createCommand from '../../utils/createCommand';
 import verifyLogin from '../../utils/verifyLogin';
-import {getDefaultAuth, getSheets} from '../../sheets';
-import series from '../../utils/decorators/series';
+import {storeQuery} from '../../store';
+import {sheetsQuery} from '../../sheets';
 import getFullUsername from '../../utils/getFullUsername';
 import authStrings from '../../strings/auth';
 import commonsStrings from '../../strings/commons';
@@ -16,56 +17,37 @@ class Login extends Handler {
 
   async didRecieveCommand(bot, {chat: {id: chatId}, from}) {
     const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
-
     const {username} = from;
 
     // 중복 로그인 방지
-    const hasAlreadySigned = await verifyLogin(username);
+    const hasSigned = await verifyLogin(username);
 
-    if (hasAlreadySigned) {
-      await bot.editMessageText(authStrings.alreadySigned, {
-        chat_id: chatId,
-        message_id: messageId,
-      });
-
-      return;
+    if (hasSigned) {
+      throw new HandlerError(authStrings.alreadySigned, {messageId});
     }
 
-    // 계정 시트 후려오기
-    const sheets = getSheets();
-    const auth = await getDefaultAuth();
-    const {values} = await sheets.values.get({
-      auth,
-      spreadsheetId: '1UToDjmLTDh15Fj_YouQnVTMEptU4uyJo6l-W94xsT4k',
-      range: 'Accounts!A2:C',
-    });
+    // 계정 시트 데이터 가져오기
+    const values = await sheetsQuery.getParsedRows(
+      '1UToDjmLTDh15Fj_YouQnVTMEptU4uyJo6l-W94xsT4k',
+      'Accounts!A1:C',
+    );
 
-    // 사용자를 찾음
-    const user = values.find(([id]) => id === username);
+    // 사용자가 있는지 확인
+    const user = values.find(({id}) => id === username);
 
-    // 못 찾음
-    if (!user) {
-      await bot.editMessageText(authStrings.userNotFound, {
-        chat_id: chatId,
-        message_id: messageId,
-      });
-
-      return;
+    if (user === null && typeof user !== 'object') {
+      throw new HandlerError(authStrings.userNotFound, {messageId});
     }
 
     // 비활성화 처리
-    const [,, hasDisabled] = user;
+    const {disabled} = user;
 
-    if (hasDisabled) {
-      await bot.editMessageText(authStrings.userDisabled(getFullUsername(from)), {
-        chat_id: chatId,
-        message_id: messageId,
-      });
-
-      return;
+    if (disabled === '⭕') {
+      throw new HandlerError(authStrings.userDisabled(getFullUsername(from)), {messageId});
     }
 
-    await setUser(username);
+    // 사용자를 세션에 추가
+    await storeQuery.setUser(username);
     await bot.editMessageText(authStrings.signin(getFullUsername(from)), {
       chat_id: chatId,
       message_id: messageId,

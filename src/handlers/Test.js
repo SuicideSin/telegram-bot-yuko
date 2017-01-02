@@ -1,5 +1,5 @@
 import Handler from '../core/Handler';
-import secured from '../utils/decorators/secured';
+import secured from '../core/decorators/secured';
 import createCommand from '../utils/createCommand';
 
 @secured

@@ -1,12 +1,12 @@
-import {getStore} from '.';
+import {getStore} from './defaultStore';
 
 async function getUser(username) {
   const store = await getStore('users');
-  const [uzer] = await store.find({
+  const [user] = await store.find({
     id: username,
   });
 
-  return uzer;
+  return user;
 }
 
 async function setUser(username) {

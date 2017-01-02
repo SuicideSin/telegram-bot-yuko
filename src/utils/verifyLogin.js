@@ -1,9 +1,9 @@
-import {getUser} from '../store/query';
+import {storeQuery} from '../store';
 
 async function verifyLogin(username) {
-  const user = await getUser(username);
+  const user = await storeQuery.getUser(username);
 
-  return user !== undefined && user !== null;
+  return user !== null && typeof user === 'object';
 }
 
 export {
