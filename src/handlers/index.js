@@ -3,6 +3,8 @@ export Login from './auth/Login';
 export Logout from './auth/Logout';
 
 // System
+export Start from './system/Start';
+export Help from './system/Help';
 export Welcome from './system/Welcome';
 export Goodbye from './system/Goodbye';
 
