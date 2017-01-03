@@ -8,7 +8,7 @@ import commonsStrings from '../../strings/commons';
 
 @secured
 class Logout extends Handler {
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['logout', '로그아웃']);
   }
 

@@ -18,7 +18,7 @@ class Bot extends TelegramBot {
 
     // 핸들러 초기화
     for (const handler of this._handlers) {
-      const command = handler.getCommand();
+      const command = handler.getCommandTarget();
 
       // 커맨드 등록
       if (command) {

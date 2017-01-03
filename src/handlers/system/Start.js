@@ -3,7 +3,7 @@ import createCommand from '../../utils/createCommand';
 import startStrings from '../../strings/start';
 
 class Start extends Handler {
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['start', '시작']);
   }
 

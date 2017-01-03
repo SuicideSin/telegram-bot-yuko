@@ -1,5 +1,5 @@
 class Handler {
-  getCommand() {
+  getCommandTarget() {
     return null;
   }
 

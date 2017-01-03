@@ -10,7 +10,7 @@ class Dice extends Handler {
 
   randomEngine = new Random(engines.mt19937().autoSeed());
 
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['dice', '주사위'], true);
   }
 

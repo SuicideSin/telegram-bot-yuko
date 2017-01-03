@@ -4,7 +4,7 @@ import {setUser} from '../../store/query';
 import {getDefaultAuth, getSheets} from '../../sheets';
 
 class Login extends Handler {
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['login', '로그인']);
   }
 

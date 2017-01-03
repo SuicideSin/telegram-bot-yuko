@@ -11,7 +11,7 @@ import commonsStrings from '../../strings/commons';
 
 @series
 class Login extends Handler {
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['login', '로그인']);
   }
 

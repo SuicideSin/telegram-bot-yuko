@@ -3,7 +3,7 @@ import createCommand from '../../utils/createCommand';
 import helpStrings from '../../strings/help';
 
 class Start extends Handler {
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['help', '도움말']);
   }
 

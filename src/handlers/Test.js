@@ -4,7 +4,7 @@ import createCommand from '../utils/createCommand';
 
 @secured
 class Test extends Handler {
-  getCommand() {
+  getCommandTarget() {
     return createCommand(['test', '테스트']);
   }
 
