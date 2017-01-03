@@ -1,6 +1,6 @@
 const shared = {
   init: 'Initializing...',
-  started: 'Telegram Bot has been started!',
+  started: 'Bot has been started!',
 };
 
 export {

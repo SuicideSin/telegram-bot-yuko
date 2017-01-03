@@ -1,22 +1,20 @@
 import TelegramBot from 'node-telegram-bot-api';
-import winston from 'winston';
+import * as winston from 'winston';
 import commonsStrings from '../strings/commons';
 import HandlerError from './HandlerError';
 
 class Bot extends TelegramBot {
   _handlers = new Set();
 
-  constructor(key) {
-    super(key, {
-      polling: {
-        interval: 0,
-      },
-    });
-  }
-
   async start() {
     // 미처리 메시지 초기화
-    await this._clearUnhandledMessages();
+    await this.getUpdates();
+
+    // 봇 정보
+    winston.info('Bot info:', await this.getMe());
+
+    // 메시징 루프 시작
+    this.initPolling();
 
     // 핸들러 초기화
     for (const handler of this._handlers) {
@@ -40,6 +38,15 @@ class Bot extends TelegramBot {
 
   registerHandler(handler) {
     this._handlers.add(handler);
+  }
+
+  initPolling() {
+    this.options.polling = {
+      timeout: 10,
+      interval: 0,
+    };
+
+    super.initPolling();
   }
 
   _wrapErrorHandler(handler) {
@@ -68,13 +75,9 @@ class Bot extends TelegramBot {
         }
 
         // 전체 오류 메시지를 로그에 기록
-        winston.error(`${event ? '[EVENT]' : '[COMMAND]'} ${err.message.replace(/\n/, ' ')} ${JSON.stringify(message)}`);
+        winston.error(event ? '[EVENT]' : '[COMMAND]', err.message.replace(/\n/, ' '), message);
       }
     };
-  }
-
-  _clearUnhandledMessages() {
-    return this.getUpdates();
   }
 }
 
