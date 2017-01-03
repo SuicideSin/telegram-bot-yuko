@@ -40,9 +40,9 @@ class Login extends Handler {
     }
 
     // 비활성화 처리
-    const {disabled} = user;
+    const {enabled} = user;
 
-    if (disabled === '⭕') {
+    if (enabled !== '⭕') {
       throw new HandlerError(authStrings.userDisabled(getFullUsername(from)), {messageId});
     }
 
