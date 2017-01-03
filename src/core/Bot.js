@@ -49,23 +49,26 @@ class Bot extends TelegramBot {
       } catch (err) {
         const [message] = args;
         const {chat: {id: chatId}} = message;
-        const {opts: {messageId} = {}} = err;
+        const {opts: {event, messageId} = {}} = err;
         const errorMessage = err instanceof HandlerError
           ? err.message
           : commonsStrings.error;
 
-        // 적절히 처리한 오류 메시지를 보냄
-        if (messageId !== undefined && messageId !== null) {
-          await this.editMessageText(errorMessage, {
-            chat_id: chatId,
-            message_id: messageId,
-          });
-        } else {
-          await this.sendMessage(chatId, errorMessage);
+        // 이벤트인 경우 건너뛰기
+        if (!event) {
+          // 적절히 처리한 오류 메시지를 보냄
+          if (messageId !== undefined && messageId !== null) {
+            await this.editMessageText(errorMessage, {
+              chat_id: chatId,
+              message_id: messageId,
+            });
+          } else {
+            await this.sendMessage(chatId, errorMessage);
+          }
         }
 
         // 전체 오류 메시지를 로그에 기록
-        winston.error(`${err.message.replace(/\n/, ' ')} / ${JSON.stringify(message)}`);
+        winston.error(`${event ? '[EVENT]' : '[COMMAND]'} ${err.message.replace(/\n/, ' ')} ${JSON.stringify(message)}`);
       }
     };
   }

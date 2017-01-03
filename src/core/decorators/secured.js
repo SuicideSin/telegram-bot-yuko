@@ -12,11 +12,19 @@ function secured(Handler) {
         .then(() => super.didRecieveCommand(...args));
     }
 
-    async _verifyUser(username) {
+    didRecieveEvent(...args) {
+      const [, {from: {username}}] = args;
+
+      // FIXME: Babel의 문제로 인해 임시 조치
+      return this._verifyUser(username, true)
+        .then(() => super.didRecieveEvent(...args));
+    }
+
+    async _verifyUser(username, event = false) {
       const hasSigned = await verifyLogin(username);
 
       if (!hasSigned) {
-        throw new HandlerError(authStrings.notSigned);
+        throw new HandlerError(authStrings.notSigned, {event});
       }
     }
   };
