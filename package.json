@@ -6,7 +6,6 @@
   "private": true,
   "main": "lib/index.js",
   "scripts": {
-    "preinstall": "npm install -g pm2",
     "prebuild": "npm run clean",
     "start": "node .",
     "test": "npm run lint",
