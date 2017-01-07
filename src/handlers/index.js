@@ -10,6 +10,7 @@ export Goodbye from './system/Goodbye';
 
 // Joy를 표하십시오
 export Dice from './joy/Dice';
+export Doge from './joy/Doge';
 
 // # export Auth from './Auth';
 // # export Blackjack from './Blackjack';
