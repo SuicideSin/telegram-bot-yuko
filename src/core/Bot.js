@@ -75,7 +75,7 @@ class Bot extends TelegramBot {
         }
 
         // 전체 오류 메시지를 로그에 기록
-        winston.error(event ? '[EVENT]' : '[COMMAND]', err.message.replace(/\n/, ' '), message);
+        winston.error(event ? '[EVENT]' : '[COMMAND]', message, '\n', err);
       }
     };
   }
