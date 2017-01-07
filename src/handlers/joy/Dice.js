@@ -19,7 +19,7 @@ class Dice extends Handler {
     const count = Number.isInteger(diceNumber)
       ? Math.min(Math.abs(diceNumber), Dice.maxDiceCount)
       : 1;
-    const randomDices = Array.from({length: count}, () => this.randomEngine.integer(0, 5));
+    const randomDices = Array.from({length: count}, () => this.randomEngine.integer(0, dataConfig.dices.length - 1));
 
     await Promise.all(randomDices.map((dice) => bot.sendSticker(chatId, dataConfig.dices[dice])));
   }
