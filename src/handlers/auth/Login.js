@@ -35,7 +35,7 @@ class Login extends Handler {
     // 사용자가 있는지 확인
     const user = values.find(({id}) => id === username);
 
-    if (user === null && typeof user !== 'object') {
+    if (user === null || typeof user !== 'object') {
       throw new HandlerError(authStrings.userNotFound, {messageId});
     }
 
