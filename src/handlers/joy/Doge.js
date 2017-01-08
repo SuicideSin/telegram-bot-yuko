@@ -14,7 +14,7 @@ class Doge extends Handler {
     return createCommand(['doge', '도기'], true);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}}, [, inputNumber]) {
+  async didReceiveCommand(bot, {chat: {id: chatId}}, [, inputNumber]) {
     const diceNumber = Number.parseInt(inputNumber);
     const count = Number.isInteger(diceNumber)
       ? Math.min(Math.abs(diceNumber), Doge.maxDogeCount)

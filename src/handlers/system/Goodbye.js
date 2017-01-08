@@ -7,7 +7,7 @@ class Goodbye extends Handler {
     return ['left_chat_participant'];
   }
 
-  async didRecieveEvent(bot, {chat: {id: chatId}, left_chat_member: leftMember}) {
+  async didReceiveEvent(bot, {chat: {id: chatId}, left_chat_member: leftMember}) {
     const {username} = leftMember;
     const {username: botname} = await bot.getMe();
     const message = botname === username

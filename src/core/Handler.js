@@ -7,9 +7,9 @@ class Handler {
     return [];
   }
 
-  didRecieveCommand(/* bot, message, match */) { /* empty */ }
+  didReceiveCommand(/* bot, message, match */) { /* empty */ }
 
-  didRecieveEvent(/* bot, message, type */) { /* empty */ }
+  didReceiveEvent(/* bot, message, type */) { /* empty */ }
 }
 
 export {

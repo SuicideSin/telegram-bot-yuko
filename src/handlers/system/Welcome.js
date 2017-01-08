@@ -7,7 +7,7 @@ class Welcome extends Handler {
     return ['new_chat_participant'];
   }
 
-  async didRecieveEvent(bot, {chat: {id: chatId}, new_chat_member: newMember}) {
+  async didReceiveEvent(bot, {chat: {id: chatId}, new_chat_member: newMember}) {
     const {username} = newMember;
     const {username: botname} = await bot.getMe();
     const message = botname === username

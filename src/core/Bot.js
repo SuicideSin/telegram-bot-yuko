@@ -23,14 +23,14 @@ class Bot extends TelegramBot {
       // 커맨드 등록
       if (command) {
         this.onText(command, this._wrapErrorHandler(
-          (message, match) => handler.didRecieveCommand(this, message, match),
+          (message, match) => handler.didReceiveCommand(this, message, match),
         ));
       }
 
       // 이벤트 핸들러 등록
       for (const event of handler.getEventTarget()) {
         this.on(event, this._wrapErrorHandler(
-          (message) => handler.didRecieveEvent(this, message, event),
+          (message) => handler.didReceiveEvent(this, message, event),
         ));
       }
     }

@@ -8,7 +8,7 @@ class Login extends Handler {
     return createCommand(['login', '로그인']);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}, from: {username}}) {
+  async didReceiveCommand(bot, {chat: {id: chatId}, from: {username}}) {
     const sheets = getSheets();
     const auth = await getDefaultAuth();
 

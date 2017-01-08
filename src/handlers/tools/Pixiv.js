@@ -14,7 +14,7 @@ class Pixiv extends Handler {
     return createCommand(['pixiv', '픽시브'], true);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}}, match) {
+  async didReceiveCommand(bot, {chat: {id: chatId}}, match) {
     await bot.sendChatAction(chatId, 'upload_photo');
 
     const [, inputNumber] = match;

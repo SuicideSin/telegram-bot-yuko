@@ -2,7 +2,7 @@ function series(Handler) {
   return class SeriesHandler extends Handler {
     _seqTargets = new Map();
 
-    didRecieveCommand(...args) {
+    didReceiveCommand(...args) {
       const [, {from: {username}}] = args;
       const handleSeries = () => {
         const target = this._seqTargets.get(username);
@@ -15,7 +15,7 @@ function series(Handler) {
         }
 
         // FIXME: Babel의 문제로 인해 임시 조치
-        return super.didRecieveCommand(...target.shift())
+        return super.didReceiveCommand(...target.shift())
           .catch((err) => {
             this._seqTargets.delete(username);
 

@@ -8,7 +8,7 @@ class Test extends Handler {
     return createCommand(['test', '테스트']);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}}) {
+  async didReceiveCommand(bot, {chat: {id: chatId}}) {
     await bot.sendMessage(chatId, '히이이익..!');
   }
 }

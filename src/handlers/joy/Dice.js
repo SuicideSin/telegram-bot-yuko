@@ -14,7 +14,7 @@ class Dice extends Handler {
     return createCommand(['dice', '주사위'], true);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}}, [, inputNumber]) {
+  async didReceiveCommand(bot, {chat: {id: chatId}}, [, inputNumber]) {
     const diceNumber = Number.parseInt(inputNumber);
     const count = Number.isInteger(diceNumber)
       ? Math.min(Math.abs(diceNumber), Dice.maxDiceCount)

@@ -7,7 +7,7 @@ class Start extends Handler {
     return createCommand(['start', '시작']);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}}) {
+  async didReceiveCommand(bot, {chat: {id: chatId}}) {
     await bot.sendMessage(chatId, startStrings.introduction, {
       parse_mode: 'Markdown',
     });

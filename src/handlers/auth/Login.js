@@ -15,7 +15,7 @@ class Login extends Handler {
     return createCommand(['login', '로그인']);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}, from}) {
+  async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
     const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
     const {username} = from;
 

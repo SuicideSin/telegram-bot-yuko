@@ -12,7 +12,7 @@ class Logout extends Handler {
     return createCommand(['logout', '로그아웃']);
   }
 
-  async didRecieveCommand(bot, {chat: {id: chatId}, from}) {
+  async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
     const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
     const {username} = from;
 
