@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import './env';
 import * as winston from 'winston';
 import Bot from './core/Bot';
 import * as handlers from './handlers';

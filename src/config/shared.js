@@ -1,10 +1,22 @@
 const shared = {
-  key: '190232685:AAEW_9mydfdaeutqQwAegWeEwFMMicX2U9c',
+  key: process.env.BOT_TOKEN || botToken(),
   sheets: {
-    clientSecretPath: 'resources/sheets/client-secret.json',
-    oauthSecretPath: 'resources/sheets/oauth-secret.json',
+    clientSecret: process.env.SHEETS_CLIENT_SECRET || sheetsClientSecret(),
+    oauthSecret: process.env.SHEETS_OAUTH_SECRET || sheetsOauthSecret(),
   },
 };
+
+function botToken() {
+  throw new Error('Environment variable `BOT_TOKEN` should be exist');
+}
+
+function sheetsClientSecret() {
+  throw new Error('Environment variable `SHEETS_CLIENT_SECRET` should be exist');
+}
+
+function sheetsOauthSecret() {
+  throw new Error('Environment variable `SHEETS_OAUTH_SECRET` should be exist');
+}
 
 export {
   shared as default,
