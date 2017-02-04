@@ -1,6 +1,6 @@
 import Random, {engines} from 'random-js';
 import Handler from '../../core/Handler';
-import secured from '../../core/decorators/secured';
+import secured from '../../decorators/secured';
 import createCommand from '../../utils/createCommand';
 import dataConfig from '../../config/data';
 

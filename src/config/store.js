@@ -1,6 +1,33 @@
 const store = {
   stores: [
-    'users',
+    {
+      name: 'users',
+      options: {
+        timestampData: true,
+      },
+      indexingOpts: [
+        {
+          fieldName: 'username',
+          unique: true,
+        },
+      ],
+    },
+    {
+      name: 'tempUsers',
+      options: {
+        timestampData: true,
+      },
+      indexingOpts: [
+        {
+          fieldName: 'username',
+          unique: true,
+        },
+        {
+          fieldName: 'updatedAt',
+          expireAfterSeconds: 3600,
+        },
+      ],
+    },
   ],
 };
 

@@ -2,20 +2,23 @@ import pifyProto from 'pify-proto';
 import Datastore from 'nedb';
 
 class StoreBase {
-  stores = {};
+  stores = new Map();
 
   get(name) {
-    return this.stores[name];
+    return this.stores.get(name);
   }
 
-  create(name) {
-    if (this.stores[name]) {
-      return Promise.reject();
+  async create(name, options) {
+    if (this.stores.has(name)) {
+      throw new Error(`Store ${name} already exist.`);
     }
 
-    const store = this.stores[name] = pifyProto(new Datastore());
+    const store = pifyProto(new Datastore(options));
 
-    return store.loadDatabase();
+    this.stores.set(name, store);
+    await store.loadDatabase();
+
+    return store;
   }
 }
 

@@ -2,7 +2,7 @@ import Handler from '../../core/Handler';
 import createCommand from '../../utils/createCommand';
 import helpStrings from '../../strings/help';
 
-class Start extends Handler {
+class Help extends Handler {
   getCommandTarget() {
     return createCommand(['help', '도움말']);
   }
@@ -15,5 +15,5 @@ class Start extends Handler {
 }
 
 export {
-  Start as default,
+  Help as default,
 };

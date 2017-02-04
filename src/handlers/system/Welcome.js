@@ -1,5 +1,5 @@
 import Handler from '../../core/Handler';
-import getFullUsername from '../../utils/getFullUsername';
+import getFullname from '../../utils/getFullname';
 import systemStrings from '../../strings/system';
 
 class Welcome extends Handler {
@@ -12,7 +12,7 @@ class Welcome extends Handler {
     const {username: botname} = await bot.getMe();
     const message = botname === username
       ? systemStrings.hello
-      : systemStrings.memberJoin(getFullUsername(newMember));
+      : systemStrings.memberJoin(getFullname(newMember));
 
     await bot.sendMessage(chatId, message);
   }

@@ -1,22 +1,18 @@
-import {readFile} from 'fs';
-import pify from 'pify';
 import GoogleAuth from 'google-auth-library';
 
-const readFileP = pify(readFile);
-
-async function getAuth(clientSecretPath, oauthSecretPath) {
+function getAuth(clientSecretObj, oauthSecretObj) {
   const {
     installed: {
       client_secret: clientSecret,
       client_id: clientId,
       redirect_uris: [redirectUris],
     },
-  } = JSON.parse(await readFileP(clientSecretPath, 'utf8'));
+  } = clientSecretObj;
 
   const auth = new GoogleAuth();
   const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUris);
 
-  oauth2Client.credentials = JSON.parse(await readFileP(oauthSecretPath, 'utf8'));
+  oauth2Client.credentials = oauthSecretObj;
 
   return oauth2Client;
 }

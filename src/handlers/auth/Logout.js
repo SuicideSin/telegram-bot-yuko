@@ -1,8 +1,8 @@
 import Handler from '../../core/Handler';
-import secured from '../../core/decorators/secured';
-import {storeQuery} from '../../store';
+import secured from '../../decorators/secured';
+import {signout} from '../../store/query/auth';
 import createCommand from '../../utils/createCommand';
-import getFullUsername from '../../utils/getFullUsername';
+import getFullname from '../../utils/getFullname';
 import authStrings from '../../strings/auth';
 import commonsStrings from '../../strings/commons';
 
@@ -16,8 +16,8 @@ class Logout extends Handler {
     const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
     const {username} = from;
 
-    await storeQuery.deleteUser(username);
-    await bot.editMessageText(authStrings.signout(getFullUsername(from)), {
+    await signout(username);
+    await bot.editMessageText(authStrings.signout(getFullname(from)), {
       chat_id: chatId,
       message_id: messageId,
     });

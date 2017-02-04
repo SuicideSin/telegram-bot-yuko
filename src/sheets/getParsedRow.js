@@ -1,8 +1,12 @@
 import _zipObject from 'lodash.zipobject';
-import {getValues} from './defaultSheets';
+import {getSheets} from '.';
 
 async function getParsedRows(sheetId, range, startRow = 2) {
-  const values = await getValues(sheetId, range);
+  const sheets = getSheets();
+  const {values} = await sheets.values.get({
+    spreadsheetId: sheetId,
+    range,
+  });
 
   // 첫번째 줄을 맵으로 설정
   const [map] = values;
@@ -14,5 +18,5 @@ async function getParsedRows(sheetId, range, startRow = 2) {
 }
 
 export {
-  getParsedRows, // eslint-disable-line import/prefer-default-export
+  getParsedRows as default,
 };

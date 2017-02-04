@@ -1,5 +1,5 @@
 import Handler from '../../core/Handler';
-import getFullUsername from '../../utils/getFullUsername';
+import getFullname from '../../utils/getFullname';
 import systemStrings from '../../strings/system';
 
 class Goodbye extends Handler {
@@ -12,7 +12,7 @@ class Goodbye extends Handler {
     const {username: botname} = await bot.getMe();
     const message = botname === username
       ? systemStrings.hello
-      : systemStrings.memberLeft(getFullUsername(leftMember));
+      : systemStrings.memberLeft(getFullname(leftMember));
 
     await bot.sendMessage(chatId, message);
   }

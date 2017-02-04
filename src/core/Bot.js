@@ -13,8 +13,8 @@ class Bot extends TelegramBot {
     // 봇 정보
     winston.info('Bot info:', await this.getMe());
 
-    // 메시징 루프 시작
-    this.initPolling();
+    // 폴링 시작
+    this.startPolling();
 
     // 핸들러 초기화
     for (const handler of this._handlers) {
@@ -40,13 +40,11 @@ class Bot extends TelegramBot {
     this._handlers.add(handler);
   }
 
-  initPolling() {
-    this.options.polling = {
+  startPolling() {
+    super.startPolling({
       timeout: 10,
       interval: 0,
-    };
-
-    super.initPolling();
+    });
   }
 
   _wrapErrorHandler(handler) {

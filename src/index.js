@@ -9,20 +9,18 @@ import sharedConfig from './config/shared';
 import sharedStrings from './strings/shared';
 
 // 디버그 설정
-winston.level = 'debug';
+if (process.env.NODE_ENV === 'development') {
+  winston.level = 'debug';
+}
 
+// 봇 초기화
 async function init() {
-  // 스토어 초기화
+  // 스토어 및 시트 초기화
   await initStore();
-
-  // 시트 초기화
   await initSheets();
 
   // 봇 생성
   const bot = new Bot(sharedConfig.key);
-
-  // 초기화 로그
-  winston.info(sharedStrings.init);
 
   // 핸들러 등록
   for (const Handler of Object.values(handlers)) {
