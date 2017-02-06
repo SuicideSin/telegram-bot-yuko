@@ -8,10 +8,9 @@
   "scripts": {
     "prebuild": "npm run clean",
     "start": "node .",
-    "test": "npm run lint",
-    "lint": "eslint .",
+    "test": "eslint .",
     "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
-    "dev": "cross-env NODE_ENV=development nodemon --exec node --require babel-register -- src/index.js",
+    "dev": "cross-env NODE_ENV=development BLUEBIRD_W_FORGOTTEN_RETURN=0 nodemon --exec node --require babel-register -- src/index.js",
     "clean": "rimraf lib"
   },
   "engines": {
