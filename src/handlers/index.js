@@ -8,7 +8,7 @@ export Help from './system/Help';
 export Welcome from './system/Welcome';
 export Goodbye from './system/Goodbye';
 
-// Joy를 표하십시오
+// Joy 를 표하십시오
 export Dice from './joy/Dice';
 export Doge from './joy/Doge';
 
@@ -25,4 +25,4 @@ export Pixiv from './tools/Pixiv';
 // export Saucenao from './Saucenao';
 // export System from './System';
 
-// export Test from './Test';
+export Test from './Test';
