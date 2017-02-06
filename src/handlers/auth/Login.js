@@ -27,12 +27,13 @@ class Login extends Handler {
     // 계정 데이터 가져오기
     const values = await getCurrentSigninStatus();
     const user = values.find(({id}) => id === username);
-    const {enabled} = user;
 
     // 사용자가 있는지 확인
     if (user === null || typeof user !== 'object') {
       throw new HandlerError(authStrings.userNotFound, errorOpts);
     }
+
+    const {enabled} = user;
 
     // 비활성화 처리
     if (enabled !== '⭕') {
