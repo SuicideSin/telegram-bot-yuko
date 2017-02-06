@@ -42,7 +42,6 @@ class Bot extends TelegramBot {
 
   startPolling() {
     super.startPolling({
-      timeout: 10,
       interval: 0,
     });
   }
