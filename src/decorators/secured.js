@@ -7,7 +7,7 @@ function secured(Handler) {
     const hasSigned = await verifySignin(username);
 
     if (!hasSigned) {
-      throw new HandlerError(authStrings.alreadySigned, errorOpts);
+      throw new HandlerError(authStrings.notSigned, errorOpts);
     }
   };
 
