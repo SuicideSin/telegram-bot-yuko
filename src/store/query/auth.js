@@ -9,7 +9,7 @@ function signin(username) {
 function signout(username) {
   const store = getStore('users');
 
-  return store.delete({username});
+  return store.remove({username});
 }
 
 async function verifySignin(username) {
