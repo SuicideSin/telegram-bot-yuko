@@ -1,5 +1,4 @@
 import TelegramBot from 'node-telegram-bot-api';
-import * as winston from 'winston';
 import commonsStrings from '../strings/commons';
 import HandlerError from './HandlerError';
 
@@ -11,7 +10,7 @@ class Bot extends TelegramBot {
     await this.getUpdates();
 
     // 봇 정보
-    winston.info('Bot info:', await this.getMe());
+    logger.status('Bot information:', await this.getMe());
 
     // 폴링 시작
     this.startPolling();
@@ -72,7 +71,11 @@ class Bot extends TelegramBot {
         }
 
         // 전체 오류 메시지를 로그에 기록
-        winston.error(event ? '[EVENT]' : '[COMMAND]', message, '\n', err);
+        const log = event
+          ? (...logArgs) => logger.event(...logArgs)
+          : (...logArgs) => logger.command(...logArgs);
+
+        log(err.stack, message);
       }
     };
   }

@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import './env';
-import * as winston from 'winston';
+import './logger';
 import Bot from './core/Bot';
 import * as handlers from './handlers';
 import {initStore} from './store';
@@ -10,7 +10,7 @@ import sharedStrings from './strings/shared';
 
 // 디버그 설정
 if (process.env.NODE_ENV === 'development') {
-  winston.level = 'debug';
+  logger.transports.console.level = 'info';
 }
 
 // 봇 초기화
@@ -31,7 +31,7 @@ async function init() {
   await bot.start();
 
   // 시작 로그
-  winston.info(sharedStrings.started);
+  logger.status(sharedStrings.started);
 }
 
 // 봇 시작
@@ -39,6 +39,6 @@ async function init() {
   try {
     await init();
   } catch (err) {
-    winston.error(err);
+    logger.error(err);
   }
 })();
