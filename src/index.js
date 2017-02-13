@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import './env';
 import './logger';
 import Bot from './core/Bot';
@@ -39,6 +38,6 @@ async function init() {
   try {
     await init();
   } catch (err) {
-    logger.error(err);
+    logger.error(err.stack);
   }
 })();

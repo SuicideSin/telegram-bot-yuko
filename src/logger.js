@@ -15,7 +15,7 @@ global.logger = new Logger({
   },
   transports: [
     new Console({
-      level: 'warn',
+      level: 'status',
       colorize: true,
       timestamp: true,
       prettyPrint: true,

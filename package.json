@@ -4,13 +4,13 @@
   "description": "Preco's personal telegram bot",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": "lib/index.js",
+  "main": "lib/entry.js",
   "scripts": {
     "prebuild": "npm run clean",
     "start": "node .",
     "test": "eslint .",
-    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
-    "dev": "cross-env NODE_ENV=development nodemon --exec node --require babel-register -- src/index.js",
+    "build": "cross-env NODE_ENV=production babel --out-dir lib src",
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
     "clean": "rimraf lib"
   },
   "engines": {
@@ -40,7 +40,6 @@
     "babel-preset-babili": "^0.0.11",
     "babel-preset-env": "^1.1.4",
     "babel-preset-stage-1": "^6.16.0",
-    "babel-register": "^6.18.0",
     "cross-env": "^3.1.4",
     "eslint": "^3.15.0",
     "eslint-config-prev": "^3.6.0",
