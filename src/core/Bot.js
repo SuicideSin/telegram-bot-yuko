@@ -33,6 +33,9 @@ class Bot extends TelegramBot {
         ));
       }
     }
+
+    this.on('polling_error', (err) => logger.error(err));
+    this.on('webhook_error', (err) => logger.error(err));
   }
 
   registerHandler(handler) {

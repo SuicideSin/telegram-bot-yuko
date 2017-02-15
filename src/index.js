@@ -19,7 +19,7 @@ async function init() {
   await initSheets();
 
   // 봇 생성
-  const bot = new Bot(sharedConfig.key);
+  const bot = new Bot(sharedConfig.key, {filepath: false});
 
   // 핸들러 등록
   for (const Handler of Object.values(handlers)) {
