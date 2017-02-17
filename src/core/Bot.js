@@ -63,7 +63,7 @@ class Bot extends TelegramBot {
         // 이벤트인 경우 건너뛰기
         if (event === null || typeof event !== 'object') {
           // 적절히 처리한 오류 메시지를 보냄
-          if (messageId !== undefined && messageId !== null) {
+          if (messageId) {
             await this.editMessageText(errorMessage, {
               chat_id: chatId,
               message_id: messageId,
