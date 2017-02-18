@@ -15,8 +15,8 @@ class StoreBase {
 
     const store = pifyProto(new Datastore(options));
 
-    this.stores.set(name, store);
     await store.loadDatabase();
+    this.stores.set(name, store);
 
     return store;
   }
