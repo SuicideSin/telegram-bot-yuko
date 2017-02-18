@@ -2,7 +2,6 @@ import Handler from '../../core/Handler';
 import bindActions from '../../decorators/bindActions';
 import secured from '../../decorators/secured';
 import series from '../../decorators/series';
-import wrapProcMessage from '../../decorators/wrapProcMessage';
 import {getStore} from '../../store';
 import * as sessionActions from '../../store/actions/session';
 import createCommand from '../../utils/createCommand';
@@ -20,16 +19,16 @@ import commonsStrings from '../../strings/commons';
 
 // 그리고 무엇보다 저렇게 스토어를 함수로 보내는게 맘에 안듬
 
-@secured(() => getStore('sessions'))
-@bindActions(() => getStore('sessions'), () => sessionActions)
+@bindActions(() => getStore('session'), () => sessionActions)
 class Logout extends Handler {
   getCommandTarget() {
     return createCommand(['logout', '로그아웃']);
   }
 
   @series()
-  @wrapProcMessage(commonsStrings.processing)
-  async didReceiveCommand(messageId, bot, {chat: {id: chatId}, from}) {
+  @secured(() => getStore('session'))
+  async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
+    const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
     const {username} = from;
 
     await this.actions.unregisterSession(username);

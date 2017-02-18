@@ -10,14 +10,14 @@ import getFullname from '../../utils/getFullname';
 import authStrings from '../../strings/auth';
 import commonsStrings from '../../strings/commons';
 
-@bindActions(() => getStore('sessions'), () => sessionActions)
+@bindActions(() => getStore('session'), () => sessionActions)
 class Login extends Handler {
   getCommandTarget() {
     return createCommand(['login', '로그인']);
   }
 
+  // 중복 로그인 방지
   async ensureUserNotSigned(username, errorOpts) {
-    // 중복 로그인 방지
     const hasSigned = await this.actions.verifySession(username);
 
     if (hasSigned) {
@@ -25,19 +25,17 @@ class Login extends Handler {
     }
   }
 
+  // 사용자가 있는지 확인하고 비활성화 처리
   async ensureUserExist(username, fullname, errorOpts) {
-    // 계정 데이터 가져오기
     const values = await getCurrentUsers();
     const user = values.find(({id}) => id === username);
 
-    // 사용자가 있는지 확인
     if (user === null || typeof user !== 'object') {
       throw new HandlerError(authStrings.userNotFound, errorOpts);
     }
 
     const {enabled} = user;
 
-    // 비활성화 처리
     if (enabled !== '⭕') {
       throw new HandlerError(authStrings.userDisabled(fullname), errorOpts);
     }
