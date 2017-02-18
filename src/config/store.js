@@ -1,11 +1,11 @@
 const store = {
   stores: [
     {
-      name: 'users',
+      name: 'sessions',
       options: {
         timestampData: true,
       },
-      indexingOpts: [
+      indexingRules: [
         {
           fieldName: 'username',
           unique: true,
@@ -13,11 +13,11 @@ const store = {
       ],
     },
     {
-      name: 'tempUsers',
+      name: 'tempSessions',
       options: {
         timestampData: true,
       },
-      indexingOpts: [
+      indexingRules: [
         {
           fieldName: 'username',
           unique: true,
