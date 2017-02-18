@@ -5,8 +5,8 @@ import {
 import {getStore} from '.';
 
 async function getProperStore(username) {
-  const sessions = getStore('sessions');
-  const tempSessions = getStore('tempSessions');
+  const sessions = getStore('session');
+  const tempSessions = getStore('temp');
 
   if (await verifySession(sessions, username)) {
     return sessions;

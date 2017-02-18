@@ -1,7 +1,10 @@
 const store = {
   stores: [
     {
-      name: 'sessions',
+      name: 'shared',
+    },
+    {
+      name: 'session',
       options: {
         timestampData: true,
       },
@@ -13,7 +16,7 @@ const store = {
       ],
     },
     {
-      name: 'tempSessions',
+      name: 'temp',
       options: {
         timestampData: true,
       },
