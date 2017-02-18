@@ -1,42 +1,54 @@
-function series(Handler) {
-  return class SeriesHandler extends Handler {
-    _seqTarget = new Map();
+import HandlerError from '../core/HandlerError';
 
-    didReceiveCommand(...args) {
-      const [, {from: {username}}] = args;
-      const handleSeries = () => {
-        const target = this._seqTarget.get(username);
+function series(queueType = 'user', maxQueue = Infinity) {
+  return (target, key, descriptor) => {
+    const commonSymbol = Symbol('common');
+    const {value: func} = descriptor;
+    const seq = new Map();
 
-        // 큐의 작업이 모두 실행되면 삭제
-        if (target.length < 1) {
-          this._seqTarget.delete(username);
+    return {
+      ...descriptor,
+      async value(...args) {
+        const [, {from: {username}}] = args;
+        const targetName = queueType === 'user' ? username : commonSymbol;
 
-          return Promise.resolve();
-        }
+        const processSeries = async (name) => {
+          const userSeq = seq.get(name);
 
-        // FIXME: Babel의 문제로 인해 임시 조치
-        return super.didReceiveCommand(...target.shift())
-          .catch((err) => {
-            this._seqTarget.delete(username);
+          try {
+            await func.apply(this, userSeq.shift());
+          } catch (err) {
+            seq.delete(name);
 
             throw err;
-          })
-          .then(handleSeries);
-      };
+          }
 
-      // 핸들러가 이미 실행중이면 큐에 추가
-      if (this._seqTarget.has(username)) {
-        this._seqTarget.get(username).push(args);
+          // 큐의 작업이 모두 실행되면 삭제, 아니면 계속 진행
+          return userSeq.length < 1
+            ? seq.delete(name)
+            : processSeries(name);
+        };
 
-        return Promise.resolve();
-      }
+        // 이미 큐에 있으면 거기에 처넣고 반환
+        if (seq.has(targetName)) {
+          const userSeq = seq.get(targetName);
 
-      // 핸들러 설정
-      this._seqTarget.set(username, [args]);
+          if (userSeq.length > maxQueue) {
+            throw new HandlerError('이미 큐가 꽉 찼습니다');
+          }
 
-      // 큐 작업 실행
-      return handleSeries();
-    }
+          userSeq.push(args);
+
+          return;
+        }
+
+        // 큐에 없으면 설정
+        seq.set(targetName, [args]);
+
+        // 큐 작업 실행
+        await processSeries(targetName);
+      },
+    };
   };
 }
 

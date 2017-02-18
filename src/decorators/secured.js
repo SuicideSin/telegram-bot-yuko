@@ -1,17 +1,18 @@
 import HandlerError from '../core/HandlerError';
-import {verifySignin} from '../store/query/auth';
+import {verifySession} from '../store/actions/session';
 import authStrings from '../strings/auth';
 
-function secured(Handler) {
+function secured(mapStore) {
   const ensureLogin = async (username, errorOpts) => {
-    const hasSigned = await verifySignin(username);
+    const store = await mapStore();
+    const hasSigned = await verifySession(store, username);
 
     if (!hasSigned) {
       throw new HandlerError(authStrings.notSigned, errorOpts);
     }
   };
 
-  return class SecuredHandler extends Handler {
+  return (Handler) => class SecuredHandler extends Handler {
     didReceiveCommand(...args) {
       const [, {from: {username}}] = args;
 

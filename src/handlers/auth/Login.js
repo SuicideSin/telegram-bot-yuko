@@ -1,14 +1,16 @@
 import Handler from '../../core/Handler';
 import HandlerError from '../../core/HandlerError';
 import series from '../../decorators/series';
-import {verifySignin, signin} from '../../store/query/auth';
-import {getCurrentSigninStatus} from '../../sheets/query/auth';
+import bindActions from '../../decorators/bindActions';
+import {getStore} from '../../store';
+import * as sessionActions from '../../store/actions/session';
+import {getCurrentUsers} from '../../sheets/actions/auth';
 import createCommand from '../../utils/createCommand';
 import getFullname from '../../utils/getFullname';
 import authStrings from '../../strings/auth';
 import commonsStrings from '../../strings/commons';
 
-@series
+@bindActions(() => getStore('sessions'), () => sessionActions)
 class Login extends Handler {
   getCommandTarget() {
     return createCommand(['login', '로그인']);
@@ -16,7 +18,7 @@ class Login extends Handler {
 
   async ensureUserNotSigned(username, errorOpts) {
     // 중복 로그인 방지
-    const hasSigned = await verifySignin(username);
+    const hasSigned = await this.actions.verifySession(username);
 
     if (hasSigned) {
       throw new HandlerError(authStrings.alreadySigned, errorOpts);
@@ -25,7 +27,7 @@ class Login extends Handler {
 
   async ensureUserExist(username, fullname, errorOpts) {
     // 계정 데이터 가져오기
-    const values = await getCurrentSigninStatus();
+    const values = await getCurrentUsers();
     const user = values.find(({id}) => id === username);
 
     // 사용자가 있는지 확인
@@ -41,6 +43,7 @@ class Login extends Handler {
     }
   }
 
+  @series()
   async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
     const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
     const {username} = from;
@@ -53,7 +56,7 @@ class Login extends Handler {
     await this.ensureUserExist(username, fullname, {messageId});
 
     // 사용자 등록
-    await signin(username);
+    await this.actions.registerSession(username);
     await bot.editMessageText(authStrings.signin(fullname), {
       chat_id: chatId,
       message_id: messageId,

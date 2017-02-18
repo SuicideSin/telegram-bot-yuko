@@ -10,7 +10,7 @@ class StoreBase {
 
   async create(name, options) {
     if (this.stores.has(name)) {
-      throw new Error(`Store ${name} already exist.`);
+      throw new Error(`스토어 ${name} 가 이미 존재합니다`);
     }
 
     const store = pifyProto(new Datastore(options));
