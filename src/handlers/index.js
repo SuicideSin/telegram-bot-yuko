@@ -16,4 +16,4 @@ export Doge from './joy/Doge';
 export Pixiv from './tools/Pixiv';
 // export Saucenao from './tools/Saucenao';
 
-// export Test from './Test';
+export Test from './Test';
