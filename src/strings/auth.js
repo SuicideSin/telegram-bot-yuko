@@ -4,7 +4,7 @@ const auth = {
   signin(fullUsername) { return `🔓 로그인 성공!\n어서오세양, ${fullUsername} 주인님!`; },
   signout(fullUsername) { return `🔐 로그아웃 성공!\n안녕히 가세양, ${fullUsername} 주인님!`; },
   userDisabled(fullUsername) { return `🔒 ${fullUsername} 아조씨는 밴 당했어요..`; },
-  userNotFound: '🔒 사용자의 아이디를 DB에서 찾을 수 없어양..',
+  userNotFound: '🔒 사용자를 찾을 수 없어양..',
 };
 
 export {

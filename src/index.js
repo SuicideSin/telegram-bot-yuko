@@ -5,7 +5,6 @@ import * as handlers from './handlers';
 import {initStore} from './store';
 import {initSheets} from './sheets';
 import sharedConfig from './config/shared';
-import sharedStrings from './strings/shared';
 
 // 디버그 설정
 if (process.env.NODE_ENV === 'development') {
@@ -30,7 +29,7 @@ async function init() {
   await bot.start();
 
   // 시작 로그
-  logger.status(sharedStrings.started);
+  logger.status('🎉 Telegram Bot started!');
 }
 
 // 봇 시작
