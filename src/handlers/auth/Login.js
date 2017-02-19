@@ -1,8 +1,6 @@
 import Handler from '../../core/Handler';
 import HandlerError from '../../core/HandlerError';
 import series from '../../decorators/series';
-import bindActions from '../../decorators/bindActions';
-import {getStore} from '../../store';
 import * as sessionActions from '../../store/actions/session';
 import {getCurrentUsers} from '../../sheets/actions/auth';
 import createCommand from '../../utils/createCommand';
@@ -10,7 +8,6 @@ import getFullname from '../../utils/getFullname';
 import authStrings from '../../strings/auth';
 import commonsStrings from '../../strings/commons';
 
-@bindActions(() => getStore('session'), () => sessionActions)
 class Login extends Handler {
   getCommandTarget() {
     return createCommand(['login', '로그인']);
@@ -18,7 +15,7 @@ class Login extends Handler {
 
   // 중복 로그인 방지
   async ensureUserNotSigned(username, errorOpts) {
-    const hasSigned = await this.actions.verifySession(username);
+    const hasSigned = await sessionActions.verifySession(username);
 
     if (hasSigned) {
       throw new HandlerError(authStrings.alreadySigned, errorOpts);
@@ -54,7 +51,7 @@ class Login extends Handler {
     await this.ensureUserExist(username, fullname, {messageId});
 
     // 사용자 등록
-    await this.actions.registerSession(username);
+    await sessionActions.registerSession(username);
     await bot.editMessageText(authStrings.signin(fullname), {
       chat_id: chatId,
       message_id: messageId,

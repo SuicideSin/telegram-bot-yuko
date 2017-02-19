@@ -1,8 +1,7 @@
 import HandlerError from '../core/HandlerError';
-import {verifySession} from '../store/actions/session';
 import authStrings from '../strings/auth';
 
-function secured(mapStore, shouldBeEvent = false) {
+function secured(verifyFunc, shouldBeEvent = false) {
   return (target, key, descriptor) => {
     const {value: func} = descriptor;
 
@@ -10,8 +9,7 @@ function secured(mapStore, shouldBeEvent = false) {
       ...descriptor,
       async value(...args) {
         const [, {from: {username}}] = args;
-        const store = await mapStore();
-        const hasSigned = await verifySession(store, username);
+        const hasSigned = await verifyFunc(username);
 
         if (!hasSigned) {
           throw new HandlerError(authStrings.notSigned, {event: shouldBeEvent});
