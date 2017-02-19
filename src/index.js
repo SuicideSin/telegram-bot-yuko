@@ -1,5 +1,5 @@
-import './env';
-import './logger';
+import './globals/env';
+import './globals/logger';
 import Bot from './core/Bot';
 import * as handlers from './handlers';
 import {initStore} from './store';
