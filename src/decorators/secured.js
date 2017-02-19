@@ -1,7 +1,11 @@
 import HandlerError from '../core/HandlerError';
+import {getStore, bindActions} from '../store';
+import * as sessionActions from '../store/actions/session';
 import authStrings from '../strings/auth';
 
-function secured(verifyFunc, shouldBeEvent = false) {
+const session = bindActions(sessionActions, () => getStore('session'));
+
+function secured(verifyFunc = session.verifySession, shouldBeEvent = false) {
   return (target, key, descriptor) => {
     const {value: func} = descriptor;
 
