@@ -4,7 +4,6 @@ import Handler from '../../core/Handler';
 import secured from '../../decorators/secured';
 import createCommand from '../../utils/createCommand';
 
-@secured
 class Pixiv extends Handler {
   static maxCount = 5;
 
@@ -14,6 +13,7 @@ class Pixiv extends Handler {
     return createCommand(['pixiv', '픽시브'], true);
   }
 
+  @secured()
   async didReceiveCommand(bot, {chat: {id: chatId}}, match) {
     await bot.sendChatAction(chatId, 'upload_photo');
 

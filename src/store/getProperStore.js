@@ -5,20 +5,20 @@ import {
 import {getStore} from '.';
 
 async function getProperStore(username) {
-  const sessions = getStore('session');
-  const tempSessions = getStore('temp');
+  const session = getStore('session');
+  const temp = getStore('temp');
 
-  if (await verifySession(sessions, username)) {
-    return sessions;
+  if (await verifySession(session, username)) {
+    return session;
   }
 
-  if (await verifySession(tempSessions, username)) {
-    return tempSessions;
+  if (await verifySession(temp, username)) {
+    return temp;
   }
 
-  await registerSession(tempSessions, username);
+  await registerSession(temp, username);
 
-  return tempSessions;
+  return temp;
 }
 
 export {

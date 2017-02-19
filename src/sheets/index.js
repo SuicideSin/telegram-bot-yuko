@@ -1,7 +1,8 @@
 import pify from 'pify';
 import {sheets as googlesheets} from 'googleapis';
 import sharedConfig from '../config/shared';
-import getAuth from './getAuth';
+import getAuth from './modules/getAuth';
+import applyAuth from './modules/applyAuth';
 
 const {spreadsheets} = googlesheets('v4');
 const sheetsAPI = pify({
@@ -18,29 +19,12 @@ function getSheets() {
 
 async function initSheets() {
   const {sheets: {clientSecret, oauthSecret}} = sharedConfig;
+  const auth = await getAuth(JSON.parse(clientSecret), JSON.parse(oauthSecret));
 
-  sheets = applyAuth(sheetsAPI, await getAuth(JSON.parse(clientSecret), JSON.parse(oauthSecret)));
+  sheets = applyAuth(sheetsAPI, auth);
 }
 
-function applyAuth(api, auth) {
-  return Object.keys(api)
-    .reduce((res, elem) => {
-      const {[elem]: target} = api;
-
-      if (typeof target === 'function') {
-        res[elem] = (opts) => target.apply(res, [{ // eslint-disable-line no-param-reassign
-          ...opts,
-          auth,
-        }]);
-      } else if (target !== null && typeof target === 'object') {
-        res[elem] = applyAuth(target, auth); // eslint-disable-line no-param-reassign
-      } else {
-        res[elem] = target; // eslint-disable-line no-param-reassign
-      }
-
-      return res;
-    }, {});
-}
+export getParsedRows from './getParsedRows';
 
 export {
   getSheets,

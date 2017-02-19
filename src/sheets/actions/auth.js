@@ -1,4 +1,4 @@
-import getParsedRows from '../getParsedRow';
+import {getParsedRows} from '..';
 
 function getCurrentUsers() {
   return getParsedRows(

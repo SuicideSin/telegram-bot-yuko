@@ -1,5 +1,5 @@
 import storeConfig from '../config/store';
-import StoreBase from './StoreBase';
+import StoreBase from './modules/StoreBase';
 
 const store = new StoreBase();
 
@@ -23,6 +23,9 @@ async function createStore(name, options, indexingRules) {
 
   return createdStore;
 }
+
+export bindActions from './bindActions';
+export getProperStore from './getProperStore';
 
 export {
   getStore,

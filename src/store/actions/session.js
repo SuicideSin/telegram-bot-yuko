@@ -1,19 +1,16 @@
-import {getStore} from '..';
-
-function registerSession(username) {
-  const store = getStore('session');
-
+function registerSession(store, username) {
   return store.insert({username});
 }
 
-function unregisterSession(username) {
-  const store = getStore('session');
+async function unregisterSession(store, username) {
+  const [user] = await store.find({
+    username,
+  });
 
-  return store.remove({username});
+  return store.remove(user);
 }
 
-async function verifySession(username) {
-  const store = getStore('session');
+async function verifySession(store, username) {
   const [user] = await store.find({
     username,
   });

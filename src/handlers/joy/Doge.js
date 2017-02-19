@@ -4,7 +4,6 @@ import secured from '../../decorators/secured';
 import createCommand from '../../utils/createCommand';
 import dataConfig from '../../config/data';
 
-@secured
 class Doge extends Handler {
   static maxDogeCount = 3;
 
@@ -14,6 +13,7 @@ class Doge extends Handler {
     return createCommand(['doge', '도기'], true);
   }
 
+  @secured()
   async didReceiveCommand(bot, {chat: {id: chatId}}, [, inputNumber]) {
     const diceNumber = Number.parseInt(inputNumber);
     const count = Number.isInteger(diceNumber)
