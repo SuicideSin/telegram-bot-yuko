@@ -1,4 +1,4 @@
-import _merge from 'lodash.merge';
+import {getSession, setSession} from './session';
 
 async function add(store, username) {
   const counter = await getCounter(store, username);
@@ -11,29 +11,45 @@ async function add(store, username) {
 async function sub(store, username) {
   const counter = await getCounter(store, username);
 
-  return setCounter(store, username, {
+  return setCounter(store, {username}, {
     count: counter.count - 1,
   });
 }
 
 async function getCounter(store, username) {
-  const [user] = await store.find({username});
-
+  const {counter} = await getSession(store, username);
   const defaults = {
     count: 0,
   };
 
-  return _merge(defaults, user.counter);
+  return {
+    ...defaults,
+    ...counter,
+  };
 }
 
 async function setCounter(store, username, val) {
-  const [user] = await store.find({username});
-  const counter = await getCounter(username);
+  const counter = await getCounter(store, username);
 
-  return store.update(user, {
-    $set: {
-      counter: _merge(counter, val),
+  return setSession(store, username, {
+    counter: {
+      ...counter,
+      val,
     },
+  });
+}
+
+async function makeCancellable(store, username) {
+  const {cancellable} = await getSession(store, username);
+
+  return setSession(store, username, {
+    cancellable: [
+      ...cancellable,
+      {
+        name: '카운터 (Counter)',
+        cleanTargets: ['counter'],
+      },
+    ],
   });
 }
 
@@ -42,4 +58,5 @@ export {
   sub,
   getCounter,
   setCounter,
+  makeCancellable,
 };

@@ -1,6 +1,6 @@
 import {
   registerSession,
-  verifySession,
+  existSession,
 } from './actions/session';
 import {getStore} from '.';
 
@@ -8,11 +8,11 @@ async function getProperStore(username) {
   const session = getStore('session');
   const temp = getStore('temp');
 
-  if (await verifySession(session, username)) {
+  if (await existSession(session, username)) {
     return session;
   }
 
-  if (await verifySession(temp, username)) {
+  if (await existSession(temp, username)) {
     return temp;
   }
 

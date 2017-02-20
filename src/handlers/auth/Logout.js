@@ -1,6 +1,6 @@
 import Handler from '../../core/Handler';
-import secured from '../../decorators/secured';
 import series from '../../decorators/series';
+import secured from '../../decorators/secured';
 import {getStore, bindActions} from '../../store';
 import * as sessionActions from '../../store/actions/session';
 import createCommand from '../../utils/createCommand';

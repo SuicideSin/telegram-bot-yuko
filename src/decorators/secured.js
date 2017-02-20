@@ -5,7 +5,7 @@ import authStrings from '../strings/auth';
 
 const session = bindActions(sessionActions, () => getStore('session'));
 
-function secured(verifyFunc = session.verifySession, shouldBeEvent = false) {
+function secured(verifyFunc = session.existSession, shouldBeEvent = false) {
   return (target, key, descriptor) => {
     const {value: func} = descriptor;
 

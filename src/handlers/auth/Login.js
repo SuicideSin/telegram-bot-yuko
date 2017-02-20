@@ -18,7 +18,7 @@ class Login extends Handler {
 
   // 중복 로그인 방지
   async ensureUserNotSigned(username, errorOpts) {
-    const hasSigned = await session.verifySession(username);
+    const hasSigned = await session.existSession(username);
 
     if (hasSigned) {
       throw new HandlerError(authStrings.alreadySigned, errorOpts);

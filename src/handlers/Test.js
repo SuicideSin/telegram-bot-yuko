@@ -1,4 +1,5 @@
 import Handler from '../core/Handler';
+import series from '../decorators/series';
 import {getProperStore, bindActions} from '../store';
 import * as counterActions from '../store/actions/counter';
 import createCommand from '../utils/createCommand';
@@ -10,6 +11,7 @@ class Test extends Handler {
     return createCommand(['test', '테스트'], true);
   }
 
+  @series()
   async didReceiveCommand(bot, {chat: {id: chatId}, from: {username}}, [, input]) {
     switch (input) {
       case '+': {

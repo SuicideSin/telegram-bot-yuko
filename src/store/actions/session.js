@@ -3,19 +3,33 @@ function registerSession(store, username) {
 }
 
 async function unregisterSession(store, username) {
-  const [user] = await store.find({username});
+  const session = await getSession(store, username);
 
-  return store.remove(user);
+  return store.remove(session);
 }
 
-async function verifySession(store, username) {
-  const [user] = await store.find({username});
+async function existSession(store, username) {
+  const session = await getSession(store, username);
 
-  return user !== null && typeof user === 'object';
+  return session !== null && typeof session === 'object';
+}
+
+async function getSession(store, username) {
+  const [session] = await store.find({username});
+
+  return session;
+}
+
+async function setSession(store, username, val) {
+  const session = await getSession(store, username);
+
+  return store.update(session, {$set: val});
 }
 
 export {
   registerSession,
   unregisterSession,
-  verifySession,
+  existSession,
+  getSession,
+  setSession,
 };
