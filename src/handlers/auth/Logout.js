@@ -8,7 +8,7 @@ import getFullname from '../../utils/getFullname';
 import authStrings from '../../strings/auth';
 import commonsStrings from '../../strings/commons';
 
-const session = bindActions(sessionActions, () => getStore('session'));
+const actions = bindActions(sessionActions, () => getStore('session'));
 
 class Logout extends Handler {
   getCommandTarget() {
@@ -18,10 +18,10 @@ class Logout extends Handler {
   @series()
   @secured()
   async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
-    const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
     const {username} = from;
+    const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
 
-    await session.unregisterSession(username);
+    await actions.unregisterSession(username);
     await bot.editMessageText(authStrings.signout(getFullname(from)), {
       chat_id: chatId,
       message_id: messageId,
