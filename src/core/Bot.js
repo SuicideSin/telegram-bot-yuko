@@ -1,5 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
-import commonsStrings from '../strings/commons';
+import strings from '../config/strings';
 import HandlerError from './HandlerError';
 
 class Bot extends TelegramBot {
@@ -58,7 +58,7 @@ class Bot extends TelegramBot {
         const {opts: {event, messageId} = {}} = err;
         const errorMessage = err instanceof HandlerError
           ? err.message
-          : commonsStrings.error;
+          : strings.common.error;
 
         // 이벤트인 경우 건너뛰기
         if (event === null || typeof event !== 'object') {

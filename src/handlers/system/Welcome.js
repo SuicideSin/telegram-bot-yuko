@@ -1,6 +1,6 @@
 import Handler from '../../core/Handler';
 import getFullname from '../../utils/getFullname';
-import systemStrings from '../../strings/system';
+import strings from '../../config/strings';
 
 class Welcome extends Handler {
   getEventTarget() {
@@ -11,8 +11,8 @@ class Welcome extends Handler {
     const {username} = newMember;
     const {username: botname} = await bot.getMe();
     const message = botname === username
-      ? systemStrings.hello
-      : systemStrings.memberJoin(getFullname(newMember));
+      ? strings.system.hello
+      : strings.system.memberJoin(getFullname(newMember));
 
     await bot.sendMessage(chatId, message);
   }

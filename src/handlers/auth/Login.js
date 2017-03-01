@@ -6,8 +6,7 @@ import * as sessionActions from '../../store/actions/session';
 import {getCurrentUsers} from '../../sheets/actions/auth';
 import createCommand from '../../utils/createCommand';
 import getFullname from '../../utils/getFullname';
-import authStrings from '../../strings/auth';
-import commonsStrings from '../../strings/commons';
+import strings from '../../config/strings';
 
 const actions = bindActions(sessionActions, () => getStore('session'));
 
@@ -21,7 +20,7 @@ class Login extends Handler {
     const hasSigned = await actions.existSession(username);
 
     if (hasSigned) {
-      throw new HandlerError(authStrings.alreadySigned, errorOpts);
+      throw new HandlerError(strings.auth.alreadySigned, errorOpts);
     }
   }
 
@@ -31,11 +30,11 @@ class Login extends Handler {
     const user = values.find(({id}) => id === username);
 
     if (!user) {
-      throw new HandlerError(authStrings.userNotFound, errorOpts);
+      throw new HandlerError(strings.auth.userNotFound, errorOpts);
     }
 
     if (user.enabled !== '⭕') {
-      throw new HandlerError(authStrings.userDisabled(fullname), errorOpts);
+      throw new HandlerError(strings.auth.userDisabled(fullname), errorOpts);
     }
   }
 
@@ -43,7 +42,7 @@ class Login extends Handler {
   async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
     const {username} = from;
     const fullname = getFullname(from);
-    const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
+    const {message_id: messageId} = await bot.sendMessage(chatId, strings.common.processing);
 
     // 중복 로그인 방지
     await this.ensureUserNotSigned(username, {messageId});
@@ -53,7 +52,7 @@ class Login extends Handler {
 
     // 사용자 등록
     await actions.registerSession(username);
-    await bot.editMessageText(authStrings.signin(fullname), {
+    await bot.editMessageText(strings.auth.signin(fullname), {
       chat_id: chatId,
       message_id: messageId,
     });

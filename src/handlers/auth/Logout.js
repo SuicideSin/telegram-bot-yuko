@@ -5,8 +5,7 @@ import {getStore, bindActions} from '../../store';
 import * as sessionActions from '../../store/actions/session';
 import createCommand from '../../utils/createCommand';
 import getFullname from '../../utils/getFullname';
-import authStrings from '../../strings/auth';
-import commonsStrings from '../../strings/commons';
+import strings from '../../config/strings';
 
 const actions = bindActions(sessionActions, () => getStore('session'));
 
@@ -19,10 +18,10 @@ class Logout extends Handler {
   @secured()
   async didReceiveCommand(bot, {chat: {id: chatId}, from}) {
     const {username} = from;
-    const {message_id: messageId} = await bot.sendMessage(chatId, commonsStrings.processing);
+    const {message_id: messageId} = await bot.sendMessage(chatId, strings.common.processing);
 
     await actions.unregisterSession(username);
-    await bot.editMessageText(authStrings.signout(getFullname(from)), {
+    await bot.editMessageText(strings.auth.signout(getFullname(from)), {
       chat_id: chatId,
       message_id: messageId,
     });

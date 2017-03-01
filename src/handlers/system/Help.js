@@ -1,6 +1,6 @@
 import Handler from '../../core/Handler';
 import createCommand from '../../utils/createCommand';
-import systemStrings from '../../strings/system';
+import strings from '../../config/strings';
 
 class Help extends Handler {
   getCommandTarget() {
@@ -8,7 +8,7 @@ class Help extends Handler {
   }
 
   async didReceiveCommand(bot, {chat: {id: chatId}}) {
-    await bot.sendMessage(chatId, systemStrings.help, {
+    await bot.sendMessage(chatId, strings.system.help, {
       parse_mode: 'Markdown',
     });
   }
