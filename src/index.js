@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import './globals';
 import Bot from './core/Bot';
 import * as handlers from './handlers';
