@@ -1,5 +1,7 @@
 # Telegram Bot Yuko
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/preco21/telegram-bot-yuko.svg)](https://greenkeeper.io/)
+
 > 플비의 커여운 딸내미
 
 ## 설치하기
