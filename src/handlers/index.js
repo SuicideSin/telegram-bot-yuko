@@ -9,6 +9,7 @@ export Welcome from './system/Welcome';
 export Goodbye from './system/Goodbye';
 
 // Joy
+export Decide from './joy/Decide';
 export Dice from './joy/Dice';
 export Doge from './joy/Doge';
 
