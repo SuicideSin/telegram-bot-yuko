@@ -4,8 +4,6 @@
 [![Build Status](https://img.shields.io/travis/preco21/telegram-bot-yuko/master.svg?style=flat-square)](https://travis-ci.org/preco21/telegram-bot-yuko)
 [![Dependency Status](https://dependencyci.com/github/preco21/telegram-bot-yuko/badge?style=flat-square)](https://dependencyci.com/github/preco21/telegram-bot-yuko)
 
-
-
 > 플비의 커여운 딸내미
 
 ## Insall
